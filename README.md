@@ -1,8 +1,16 @@
-# PROYECTO WEB
+# TecAdvisor
 
-# TecAvisor
+<img src="src/logo.jpeg" width="400" ><img> 
 
-![logo](src/logo.jpeg)
+# Equipo
+
+| Nombre                    | Matricula                                                               | Github                                                       | Rol      |
+| ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ | --------- |
+| Mauricio Juarez | A01283075 | [@zJuarez](https://github.com/zJuarez) | Front
+| Daniel | - | - | -
+| Estefania | - | - | -
+| Blanca | - | - | -
+| Ana | - | - | -
 
 # Desarrollo
 
