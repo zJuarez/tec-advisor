@@ -8,7 +8,7 @@
 | ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ | --------- |
 | Mauricio Juarez | A01283075 | [@zJuarez](https://github.com/zJuarez) | Front
 | Daniel | - | - | -
-| Estefania | - | - | -
+| Estefania | A01283472 | [@estefycharles](https://github.com/estefycharles) | 
 | Blanca | - | - | -
 | Ana | - | - | -
 
