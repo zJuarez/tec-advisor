@@ -1,11 +1,33 @@
-import logo from './logo.jpeg';
 import './App.css';
+import Navbar from './components/Navbar';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Place from './components/Place';
+import categories from './data/categories';
+import Divider from '@mui/material/Divider';
+
+// Or Create your Own theme:
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#5065A8'
+    },
+    secondary: {
+      main: '#C98CA7'
+    }
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Navbar></Navbar>
+        <div className="feed">
+          {categories.map(category => <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}> <Divider> {category.toUpperCase()}</Divider> <Place></Place>
+            <Place></Place> </div>)}
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

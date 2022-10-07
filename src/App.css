@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -26,4 +27,23 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.feed {
+  width: 60%;
+  align-self: center;
+  margin: auto;
+  max-width: 600px;
+}
+
+@media screen and (max-width: 600px) {
+  .feed {
+    width: 80%
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .feed {
+    width: 90%
+  }
 }
