@@ -11,12 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import pages from '../data/categories';
-import LoginIcon from '@mui/icons-material/Login';
 import Login from '@mui/icons-material/Login';
-
+import logo from '../logo/logo-wc.png'
 const settings = ['Profile', 'Logout'];
 
 const Navbar = (props) => {
@@ -44,24 +42,7 @@ const Navbar = (props) => {
     <AppBar style={{ color: "#f5f3ee" }} position="sticky" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <PinDropIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            TecAdvisor
-          </Typography>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}> <img src={logo} style={{ padding: 10 }} width="70px"></img></Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -99,25 +80,8 @@ const Navbar = (props) => {
               ))}
             </Menu>
           </Box>
-          <PinDropIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            TecAdvisor
-          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}> <img src={logo} style={{ padding: 10 }} width="70px"></img></Box>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
