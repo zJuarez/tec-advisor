@@ -7,10 +7,10 @@
 | Nombre                    | Matricula                                                               | Github                                                       | Rol      |
 | ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ | --------- |
 | Mauricio Juarez | A01283075 | [@zJuarez](https://github.com/zJuarez) | Front
-| Daniel | - | - | -
+| Daniel | A00825968 | - | -
 | Estefania | A01283472 | [@estefycharles](https://github.com/estefycharles) | 
 | Blanca | - | - | -
-| Ana | - | - | -
+| Ana | A01251091 | - | -
 
 # Desarrollo
 
