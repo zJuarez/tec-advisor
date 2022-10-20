@@ -10,7 +10,7 @@
 | Daniel Riojas | A00825968 | [@danielriojas](https://github.com/danielriojas) | Back
 | Estefania | A01283472 | [@estefycharles](https://github.com/estefycharles) | 
 | Blanca Agostini | A00517086 | @BlancaAgostini | Front y Back
-| Ana | A01251091 | - | -
+| Ana | A01251091 | [@anelisa8](https://github.com/anaelisa8) | Front
 
 # Desarrollo
 

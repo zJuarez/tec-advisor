@@ -15,6 +15,7 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import pages from '../data/categories';
 import Login from '@mui/icons-material/Login';
 import logo from '../logo/logo-wc.png'
+import {Link} from 'react-router-dom';
 const settings = ['Profile', 'Logout'];
 
 const Navbar = (props) => {
@@ -125,10 +126,11 @@ const Navbar = (props) => {
             </Menu>
           </Box>}
           {!logIn &&
-            <IconButton aria-label="login">
-              <Login style={{ color: "#f5f3ee" }} />
-            </IconButton>
-
+            <Link to = '/login'>
+              <IconButton aria-label="login">
+                <Login style={{ color: "#f5f3ee" }} />
+              </IconButton>
+            </Link>
           }
         </Toolbar>
       </Container>
