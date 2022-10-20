@@ -15,7 +15,8 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import pages from '../data/categories';
 import Login from '@mui/icons-material/Login';
 import logo from '../logo/logo-wc.png'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 const settings = ['Profile', 'Logout'];
 
 const Navbar = (props) => {
@@ -23,6 +24,7 @@ const Navbar = (props) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const logIn = props.logIn ?? false;
+  const logoButton = <Link to='/' style={{ textDecoration: 'none' }}>  <img src={logo} style={{ padding: 10 }} width="70px"></img> </Link>
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,11 +41,14 @@ const Navbar = (props) => {
     setAnchorElUser(null);
   };
 
+  if (window.location.pathname.includes("signup") || window.location.pathname.includes("login")) {
+    return (<></>);
+  }
   return (
     <AppBar style={{ color: "#f5f3ee" }} position="sticky" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}> <img src={logo} style={{ padding: 10 }} width="70px"></img></Box>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}> {logoButton}</Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -75,24 +80,29 @@ const Navbar = (props) => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+
+                <MenuItem key={page} onClick={() => navigate("/" + page)}>
+                  <Link to={"/" + page} style={{ textDecoration: 'none' }}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </Link>
                 </MenuItem>
+
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}> <img src={logo} style={{ padding: 10 }} width="70px"></img></Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}> {logoButton}</Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                style={{ color: "#f5f3ee" }}
-                sx={{ my: 2, display: 'block' }}
-              >
-                {page}
-              </Button>
+              <Link to={"/" + page} style={{ textDecoration: 'none' }}>
+                <Button
+                  key={page}
+                  style={{ color: "#f5f3ee" }}
+                  sx={{ my: 2, display: 'block' }}
+                >
+                  {page}
+                </Button>
+              </Link>
             ))}
           </Box>
 
@@ -126,7 +136,7 @@ const Navbar = (props) => {
             </Menu>
           </Box>}
           {!logIn &&
-            <Link to = '/login'>
+            <Link to='/login'>
               <IconButton aria-label="login">
                 <Login style={{ color: "#f5f3ee" }} />
               </IconButton>
