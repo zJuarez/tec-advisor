@@ -8,6 +8,11 @@ import logo from '../logo/logo-wc.png'
 import GoogleIcon from '@mui/icons-material/Google';
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom';
+import { ConstructionRounded } from '@mui/icons-material';
+import axios from 'axios';
+import {toast} from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) =>({
     backgroundContainer: {
@@ -127,13 +132,41 @@ export default function Signup ({classes}){
 
     //State
     const [values, setValues] = useState({
+        name: '',
         email: '',
         password: '',
         showPassword: false,
-        loading: false,
-        error: "",
-        usuario:"",
     });
+
+    const {name, email, password, showPassword} = values;
+
+    const handleChange = name => (e) => {
+        setValues({...values, [name]: e.target.value});
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        try{
+            const {data} = await axios.post('/api/signup', {
+                name,
+                email,
+                password
+            });
+            console.log(data);
+
+            if(data.success === true){
+                setValues({name: '', email: '', password: ''});
+                toast.success("Sign up successfully, you are in!");
+                navigate('/');
+            }
+
+        }catch(err){
+            console.log(err.response.data.error);
+            toast.error(err.response.data.error);
+        }
+    }
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
@@ -163,6 +196,8 @@ export default function Signup ({classes}){
                         type="text" 
                         placeholder="Correo electrónico"
                         className={classes.userInput}
+                        onChange={handleChange("email")}
+                        value={email} 
                     />
                 </div>
 
@@ -171,30 +206,29 @@ export default function Signup ({classes}){
                         type="text" 
                         placeholder="Nombre de usuario"
                         className={classes.userInput}
+                        onChange={handleChange("name")}
+                        value={name} 
                     />
                 </div>
                 
                 <div className={classes.passwordContainer}>
                     <input 
-                        //type= 'text'
-                        //placeholder="Contraseña"
-                       //className={classes.passwordInput}
                         type={values.showPassword ? 'text' : 'password'}
                         placeholder="Contraseña"
-                        value={values.password}
-                        onChange={(e) => setValues({...values, password: e.target.value})}
                         className={classes.passwordInput}
+                        onChange={handleChange("password")}
+                        value={password} 
                     />
                     <IconButton
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                         >
-                        {values.showPassword ? <Visibility  style={{color: 'white'}}/> : <VisibilityOff style={{color: 'white'}}/>}
+                        {showPassword ? <Visibility  style={{color: 'white'}}/> : <VisibilityOff style={{color: 'white'}}/>}
                     </IconButton>
                 </div>
                 <div>
-                    <WhiteButton>Regístrarte</WhiteButton>
+                    <WhiteButton onClick={handleSubmit} >Regístrarte</WhiteButton>
                 </div>
                 <div> 
                 <p className={classes.link}>¿Tienes una cuenta? <Link to = '/login' style={{ textDecoration: 'none' }}><Button sx={{ color:'#202843', fontWeight: 'bold'}} className={classes.link}> Entrar </Button></Link></p> 

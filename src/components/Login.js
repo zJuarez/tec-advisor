@@ -8,6 +8,10 @@ import logo from '../logo/logo-wc.png'
 import GoogleIcon from '@mui/icons-material/Google';
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {toast} from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) =>({
     backgroundContainer: {
@@ -120,15 +124,42 @@ const useStyles = makeStyles((theme) =>({
   
 export default function Login ({classes}){
     classes = useStyles();
-
-    //State
+    
     const [values, setValues] = useState({
         email: '',
         password: '',
         showPassword: false,
-        loading: false,
-        error: ""
     });
+
+    const {email, password, showPassword } = values;
+
+    const handleChange = name => (e) => {
+        setValues({...values, [name]: e.target.value});
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        try{
+            const {data} = await axios.post('/api/signin', {
+                email,
+                password
+            });
+            console.log(data);
+
+            if(data.success === true){
+                setValues({email: '', password: ''});
+                toast.success("Login succesfully!");
+                navigate('/');
+            }
+
+        }catch(err){
+            console.log(err.response.data.error);
+            toast.error(err.response.data.error);
+        }
+    }
+
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
@@ -147,21 +178,20 @@ export default function Login ({classes}){
                 <div style={{display: 'flex'}}>
                     <input 
                         type="text" 
-                        placeholder="Usuario o correo electrónico"
+                        placeholder="Correo electrónico"
                         className={classes.userInput}
+                        onChange={handleChange("email")}
+                        value={email} 
                     />
                 </div>
                 
                 <div className={classes.passwordContainer}>
                     <input 
-                        //type= 'text'
-                        //placeholder="Contraseña"
-                       //className={classes.passwordInput}
                         type={values.showPassword ? 'text' : 'password'}
                         placeholder="Contraseña"
-                        value={values.password}
-                        onChange={(e) => setValues({...values, password: e.target.value})}
                         className={classes.passwordInput}
+                        onChange={handleChange("password")}
+                        value={password} 
                     />
                     <IconButton
                         aria-label="toggle password visibility"
@@ -172,7 +202,7 @@ export default function Login ({classes}){
                     </IconButton>
                 </div>
                 <div>
-                    <WhiteButton>Iniciar sesión</WhiteButton>
+                    <WhiteButton onClick={handleSubmit}>Iniciar sesión</WhiteButton>
                 </div>
                 <div>
                     <p className={classes.link}>────────  o  ────────</p>

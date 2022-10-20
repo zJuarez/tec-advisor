@@ -1,6 +1,8 @@
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
@@ -20,6 +22,7 @@ const theme = createTheme({
 function App() {
   return (
     <Router>
+    <ToastContainer/>
     <ThemeProvider theme={theme}>
       <div className="App">
         <Routes>
