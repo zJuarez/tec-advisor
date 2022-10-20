@@ -1,6 +1,6 @@
 # TecAdvisor
 
-<img src="src/logo.jpeg" width="400" ><img> 
+<img src="src/logo/logo.jpeg" width="400" ><img> 
 
 # Equipo
 
