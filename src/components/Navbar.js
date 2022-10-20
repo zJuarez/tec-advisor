@@ -81,7 +81,7 @@ const Navbar = (props) => {
             >
               {pages.map((page) => (
 
-                <MenuItem key={page} onClick={() => navigate("/" + page)}>
+                <MenuItem key={page} >
                   <Link to={"/" + page} style={{ textDecoration: 'none' }}>
                     <Typography textAlign="center">{page}</Typography>
                   </Link>
