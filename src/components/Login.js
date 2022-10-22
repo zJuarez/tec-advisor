@@ -7,13 +7,13 @@ import { WhiteButton } from './Buttons'
 import logo from '../logo/logo-wc.png'
 import GoogleIcon from '@mui/icons-material/Google';
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles((theme) => ({
     backgroundContainer: {
         minWidth: '100vw',
         minHeight: '100vh',
@@ -95,19 +95,19 @@ const useStyles = makeStyles((theme) =>({
         },
         fontSize: '15px',
     },
-    loaderContainer:  {
+    loaderContainer: {
         margin: 'auto',
         width: 80,
         paddingTop: '30px'
     },
     logo: {
-        padding: 50,
+        padding: "0 0 50px 0",
         width: "300px",
     },
     icon: {
         padding: 5,
     },
-    signup:{
+    signup: {
         position: 'absolute',
         left: '50%',
         top: '50%',
@@ -121,40 +121,40 @@ const useStyles = makeStyles((theme) =>({
     }
 }))
 
-  
-export default function Login ({classes}){
+
+export default function Login({ classes }) {
     classes = useStyles();
-    
+
     const [values, setValues] = useState({
         email: '',
         password: '',
         showPassword: false,
     });
 
-    const {email, password, showPassword } = values;
+    const { email, password, showPassword } = values;
 
     const handleChange = name => (e) => {
-        setValues({...values, [name]: e.target.value});
+        setValues({ ...values, [name]: e.target.value });
     };
 
     const navigate = useNavigate();
 
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const {data} = await axios.post('/api/signin', {
+        try {
+            const { data } = await axios.post('/api/signin', {
                 email,
                 password
             });
             console.log(data);
 
-            if(data.success === true){
-                setValues({email: '', password: ''});
+            if (data.success === true) {
+                setValues({ email: '', password: '' });
                 toast.success("Login succesfully!");
                 navigate('/');
             }
 
-        }catch(err){
+        } catch (err) {
             console.log(err.response.data.error);
             toast.error(err.response.data.error);
         }
@@ -172,49 +172,51 @@ export default function Login ({classes}){
 
     return (
         <div className={classes.backgroundContainer}>
-        <div className={classes.overlay}>
-            <div className={classes.formContainer}>
-            <img className={classes.logo} src={logo}></img>
-                <div style={{display: 'flex'}}>
-                    <input 
-                        type="text" 
-                        placeholder="Correo electrónico"
-                        className={classes.userInput}
-                        onChange={handleChange("email")}
-                        value={email} 
-                    />
-                </div>
-                
-                <div className={classes.passwordContainer}>
-                    <input 
-                        type={values.showPassword ? 'text' : 'password'}
-                        placeholder="Contraseña"
-                        className={classes.passwordInput}
-                        onChange={handleChange("password")}
-                        value={password} 
-                    />
-                    <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
+            <div className={classes.overlay}>
+                <div className={classes.formContainer}>
+                    <Link to='/' style={{ textDecoration: 'none' }}>
+                        <img className={classes.logo} src={logo}></img>
+                    </Link>
+                    <div style={{ display: 'flex' }}>
+                        <input
+                            type="text"
+                            placeholder="Correo electrónico"
+                            className={classes.userInput}
+                            onChange={handleChange("email")}
+                            value={email}
+                        />
+                    </div>
+
+                    <div className={classes.passwordContainer}>
+                        <input
+                            type={values.showPassword ? 'text' : 'password'}
+                            placeholder="Contraseña"
+                            className={classes.passwordInput}
+                            onChange={handleChange("password")}
+                            value={password}
+                        />
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
                         >
-                        {values.showPassword ? <Visibility  style={{color: 'white'}}/> : <VisibilityOff style={{color: 'white'}}/>}
-                    </IconButton>
-                </div>
-                <div>
-                    <WhiteButton onClick={handleSubmit}>Iniciar sesión</WhiteButton>
-                </div>
-                <div>
-                    <p className={classes.link}>────────  o  ────────</p>
-                </div>
-                <div> 
-                <Button sx={{ color:'#202843', fontWeight: 'bold'}} className={classes.link}>{<GoogleIcon className={classes.icon}/>} Iniciar sesión con Google </Button>
-                </div>
-                <div> 
-                <p className={classes.link}>¿No tienes cuenta? <Link to = '/signup' style={{ textDecoration: 'none' }}><Button sx={{ color:'#202843', fontWeight: 'bold'}} className={classes.link}> Regístrate </Button> </Link></p> 
+                            {values.showPassword ? <Visibility style={{ color: 'white' }} /> : <VisibilityOff style={{ color: 'white' }} />}
+                        </IconButton>
+                    </div>
+                    <div>
+                        <WhiteButton onClick={handleSubmit}>Iniciar sesión</WhiteButton>
+                    </div>
+                    <div>
+                        <p className={classes.link}>────────  o  ────────</p>
+                    </div>
+                    <div>
+                        <Button sx={{ color: '#202843', fontWeight: 'bold' }} className={classes.link}>{<GoogleIcon className={classes.icon} />} Iniciar sesión con Google </Button>
+                    </div>
+                    <div>
+                        <p className={classes.link}>¿No tienes cuenta? <Link to='/signup' style={{ textDecoration: 'none' }}><Button sx={{ color: '#202843', fontWeight: 'bold' }} className={classes.link}> Regístrate </Button> </Link></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     )
 }

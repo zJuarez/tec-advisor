@@ -11,11 +11,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import PinDropIcon from '@mui/icons-material/PinDrop';
 import pages from '../data/categories';
 import Login from '@mui/icons-material/Login';
 import logo from '../logo/logo-wc.png'
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
 const settings = ['Profile', 'Logout'];
 
@@ -23,6 +23,7 @@ const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const location = useLocation()
   const logIn = props.logIn ?? false;
   const logoButton = <Link to='/' style={{ textDecoration: 'none' }}>  <img src={logo} style={{ padding: 10 }} width="70px"></img> </Link>
 
@@ -41,9 +42,11 @@ const Navbar = (props) => {
     setAnchorElUser(null);
   };
 
-  if (window.location.pathname.includes("signup") || window.location.pathname.includes("login")) {
+  if (location.pathname.includes("signup") || location.pathname.includes("login")) {
+    document.body.style = 'background: #5065A8;';
     return (<></>);
   }
+  document.body.style = 'background: #f5f3ee;';
   return (
     <AppBar style={{ color: "#f5f3ee" }} position="sticky" color="primary">
       <Container maxWidth="xl">

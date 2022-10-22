@@ -7,14 +7,14 @@ import { WhiteButton } from './Buttons'
 import logo from '../logo/logo-wc.png'
 import GoogleIcon from '@mui/icons-material/Google';
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ConstructionRounded } from '@mui/icons-material';
 import axios from 'axios';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles((theme) => ({
     backgroundContainer: {
         minWidth: '100vw',
         minHeight: '100vh',
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) =>({
         },
         fontSize: '15px',
     },
-    loaderContainer:  {
+    loaderContainer: {
         margin: 'auto',
         width: 80,
         paddingTop: '30px'
@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) =>({
     icon: {
         padding: 5,
     },
-    signup:{
+    signup: {
         position: 'absolute',
         left: '50%',
         top: '50%',
@@ -120,14 +120,14 @@ const useStyles = makeStyles((theme) =>({
         borderRadius: "25px",
         boxShadow: '0 3px 5px 2px rgba(32,40,67,1)',
     },
-    text:{
+    text: {
         color: 'white',
         fontSize: '20px',
     }
 }))
 
-  
-export default function Signup ({classes}){
+
+export default function Signup({ classes }) {
     classes = useStyles();
 
     //State
@@ -138,31 +138,31 @@ export default function Signup ({classes}){
         showPassword: false,
     });
 
-    const {name, email, password, showPassword} = values;
+    const { name, email, password, showPassword } = values;
 
     const handleChange = name => (e) => {
-        setValues({...values, [name]: e.target.value});
+        setValues({ ...values, [name]: e.target.value });
     };
 
     const navigate = useNavigate();
 
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const {data} = await axios.post('/api/signup', {
+        try {
+            const { data } = await axios.post('/api/signup', {
                 name,
                 email,
                 password
             });
             console.log(data);
 
-            if(data.success === true){
-                setValues({name: '', email: '', password: ''});
+            if (data.success === true) {
+                setValues({ name: '', email: '', password: '' });
                 toast.success("Sign up successfully, you are in!");
                 navigate('/');
             }
 
-        }catch(err){
+        } catch (err) {
             console.log(err.response.data.error);
             toast.error(err.response.data.error);
         }
@@ -179,62 +179,64 @@ export default function Signup ({classes}){
 
     return (
         <div className={classes.backgroundContainer}>
-        <div className={classes.overlay}>
-            <div className={classes.formContainer}>
-            <img className={classes.logo} src={logo}></img>
-            <div>
-                <h2 className={classes.text}>Regístrate para conocer más.</h2>
-            </div>
-                <div> 
-                    <Button sx={{ color:'#202843', fontWeight: 'bold'}} className={classes.link}>{<GoogleIcon className={classes.icon}/>} Iniciar sesión con Google </Button>
-                </div>
-                <div>
-                    <p className={classes.link}>────────  o  ────────</p>
-                </div>
-                <div style={{display: 'flex'}}>
-                    <input 
-                        type="text" 
-                        placeholder="Correo electrónico"
-                        className={classes.userInput}
-                        onChange={handleChange("email")}
-                        value={email} 
-                    />
-                </div>
+            <div className={classes.overlay}>
+                <div className={classes.formContainer}>
+                    <Link to='/' style={{ textDecoration: 'none' }}>
+                        <img className={classes.logo} src={logo}></img>
+                    </Link>
+                    <div>
+                        <h2 className={classes.text}>Regístrate para conocer más.</h2>
+                    </div>
+                    <div>
+                        <Button sx={{ color: '#202843', fontWeight: 'bold' }} className={classes.link}>{<GoogleIcon className={classes.icon} />} Iniciar sesión con Google </Button>
+                    </div>
+                    <div>
+                        <p className={classes.link}>────────  o  ────────</p>
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                        <input
+                            type="text"
+                            placeholder="Correo electrónico"
+                            className={classes.userInput}
+                            onChange={handleChange("email")}
+                            value={email}
+                        />
+                    </div>
 
-                <div style={{display: 'flex'}}>
-                    <input 
-                        type="text" 
-                        placeholder="Nombre de usuario"
-                        className={classes.userInput}
-                        onChange={handleChange("name")}
-                        value={name} 
-                    />
-                </div>
-                
-                <div className={classes.passwordContainer}>
-                    <input 
-                        type={values.showPassword ? 'text' : 'password'}
-                        placeholder="Contraseña"
-                        className={classes.passwordInput}
-                        onChange={handleChange("password")}
-                        value={password} 
-                    />
-                    <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
+                    <div style={{ display: 'flex' }}>
+                        <input
+                            type="text"
+                            placeholder="Nombre de usuario"
+                            className={classes.userInput}
+                            onChange={handleChange("name")}
+                            value={name}
+                        />
+                    </div>
+
+                    <div className={classes.passwordContainer}>
+                        <input
+                            type={values.showPassword ? 'text' : 'password'}
+                            placeholder="Contraseña"
+                            className={classes.passwordInput}
+                            onChange={handleChange("password")}
+                            value={password}
+                        />
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
                         >
-                        {showPassword ? <Visibility  style={{color: 'white'}}/> : <VisibilityOff style={{color: 'white'}}/>}
-                    </IconButton>
-                </div>
-                <div>
-                    <WhiteButton onClick={handleSubmit} >Regístrarte</WhiteButton>
-                </div>
-                <div> 
-                <p className={classes.link}>¿Tienes una cuenta? <Link to = '/login' style={{ textDecoration: 'none' }}><Button sx={{ color:'#202843', fontWeight: 'bold'}} className={classes.link}> Entrar </Button></Link></p> 
+                            {showPassword ? <Visibility style={{ color: 'white' }} /> : <VisibilityOff style={{ color: 'white' }} />}
+                        </IconButton>
+                    </div>
+                    <div>
+                        <WhiteButton onClick={handleSubmit} >Regístrarte</WhiteButton>
+                    </div>
+                    <div>
+                        <p className={classes.link}>¿Tienes una cuenta? <Link to='/login' style={{ textDecoration: 'none' }}><Button sx={{ color: '#202843', fontWeight: 'bold' }} className={classes.link}> Entrar </Button></Link></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     )
 }
