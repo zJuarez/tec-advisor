@@ -146,10 +146,11 @@ export default function Login({ classes }) {
                 email,
                 password
             });
-            console.log(data);
 
             if (data.success === true) {
                 setValues({ email: '', password: '' });
+                document.cookie = `token=${data.token}; path=/;`
+                document.cookie = `userName=${data.name}; path=/;`;
                 toast.success("Login succesfully!");
                 navigate('/');
             }

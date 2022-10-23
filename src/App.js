@@ -24,7 +24,18 @@ const theme = createTheme({
 function App() {
   return (
     <Router>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        theme="dark"
+      />
       <ThemeProvider theme={theme}>
         <Navbar></Navbar>
         <div className="App">

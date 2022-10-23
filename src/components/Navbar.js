@@ -16,16 +16,40 @@ import Login from '@mui/icons-material/Login';
 import logo from '../logo/logo-wc.png'
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
-const settings = ['Profile', 'Logout'];
+const settings = ['Logout'];
 
 const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const location = useLocation()
-  const logIn = props.logIn ?? false;
+  const logIn = document.cookie.search('userName=') !== -1
+  const userName = logIn ? document.cookie.substr(
+    document.cookie.search('userName=') + 9
+  ) : null
   const logoButton = <Link to='/' style={{ textDecoration: 'none' }}>  <img src={logo} style={{ padding: 10 }} width="70px"></img> </Link>
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.get('/api/logout', {
+
+      });
+      if (data.success) {
+        document.cookie = "token= ; path=/; expires = Thu, 01 Jan 1970 00:00:00 GMT"; // eliminate token
+        document.cookie = "userName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+
+        console.log("logout event")
+        handleCloseUserMenu()
+      }
+    } catch (err) {
+      console.log(err.response.data.error);
+      toast.error(err.response.data.error);
+    }
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -112,7 +136,7 @@ const Navbar = (props) => {
           {logIn && <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={userName} src="" > {userName[0]}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -132,7 +156,7 @@ const Navbar = (props) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleLogout}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
