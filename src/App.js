@@ -9,6 +9,8 @@ import Home from './components/Home';
 import categories from './data/categories';
 import Category from './components/Category';
 import Navbar from './components/Navbar';
+import { useLoadScript } from '@react-google-maps/api';
+import Map from './components/Map';
 // Or Create your Own theme:
 const theme = createTheme({
   palette: {
@@ -22,6 +24,14 @@ const theme = createTheme({
 });
 
 function App() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyA835iYhDncbnOuhbUNzFSrpe1jSoSi1JU',
+  });
+
+  if(!isLoaded) {
+    return <div>Loading...</div>
+  }
+
   return (
     <Router>
       <ToastContainer
@@ -39,6 +49,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Navbar></Navbar>
         <div className="App">
+          <Map/>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
