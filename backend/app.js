@@ -17,8 +17,12 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useCreateIndex: true
 })
-.then(()=> console.log('DB connected'))
-.catch((err)=>console.log(err));
+    .then(() => console.log('DB connected'))
+    .catch((err) => console.log(err));
+
+
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, './build')));
 
 //MIDDLEWARE
 app.use(morgan('dev'));
@@ -34,6 +38,6 @@ app.use(errorHandler);
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`App is running on port ${port}`);
 })
