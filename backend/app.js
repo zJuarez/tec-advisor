@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const cors = require('cors');
+const path = require('path');
 
 //IMPORT ROUTES
 const userRoutes = require('./routes/user')
