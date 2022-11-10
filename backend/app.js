@@ -17,7 +17,7 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useCreateIndex: true
 })
-    .then(() => console.log('DB connected!'))
+    .then(() => console.log('DB connected!!'))
     .catch((err) => console.log(err));
 
 
