@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 
 //IMPORT ROUTES
 const userRoutes = require('./routes/user')
@@ -23,7 +23,7 @@ mongoose.connect(process.env.DATABASE, {
 
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, './build')));
+// app.use(express.static(path.resolve(__dirname, './build')));
 
 //MIDDLEWARE
 app.use(morgan('dev'));
@@ -42,3 +42,5 @@ const port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`App is running on port ${port}`);
 })
+
+module.exports = app
