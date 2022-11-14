@@ -10,32 +10,33 @@ import NorthIcon from '@mui/icons-material/North';
 import titos from './titos.jpg'
 import SouthIcon from '@mui/icons-material/South';
 import PinDropIcon from '@mui/icons-material/PinDrop';
+import CommentIcon from '@mui/icons-material/Comment';
+import { Link } from 'react-router-dom';
 
 export default function Place(props) {
 
-    const place = props.place ?? "Tito's Alitas Adictivas";
-    const zone = props.zone ?? "Zona Tec";
-    const price = props.price ?? 3;
-    const priceS = '$'.repeat(price)
-    const top = props.top ?? 1;
-    const desc = props.desc ?? "Las Mejores Alitas del Universo. Tenders, Elotes, Papas Especiales, Quesito Irresistible, Cerveza bien fría. Salsas únicas y originales."
-    const img = props.img ?? titos;
+    const name = props.business.name;
+    const category = props.business.category;
+    const address = props.business.address;
+    const city = props.business.city;
+    const state = props.business.state;
+    const img = props.business.imageUrl;
 
     return (<Card sx={{ width: "100%", marginTop: 2, boxShadow: 'none', margin: "1px solid gray" }}>
         <CardMedia
             component="img"
             maxHeight="240px"
             image={img}
-            alt={place}
+            alt={name}
         />
         <CardContent>
             <CardHeader
-                title={place}
-                subheader={zone + " " + priceS}
+                title={name}
+                subheader={category + ". " + city + ", " + state}
             />
 
             <Typography variant="body2" color="text.secondary">
-                {desc}
+                {/* {desc} */}
             </Typography>
         </CardContent>
         <CardActions>
@@ -46,7 +47,14 @@ export default function Place(props) {
                 <SouthIcon />
             </IconButton>
             <IconButton style={{ marginLeft: 'auto' }} aria-label="location">
-                <PinDropIcon />
+                <Link to={"/location/"+props.business._id}>
+                    <PinDropIcon />
+                </Link>
+            </IconButton>
+            <IconButton>
+                <Link to={"/reviews/"+props.business._id}>
+                    <CommentIcon/>
+                </Link>
             </IconButton>
         </CardActions>
     </Card>);

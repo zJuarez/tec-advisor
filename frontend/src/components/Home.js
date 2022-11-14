@@ -5,7 +5,8 @@ import Category from './Category';
 function Home() {
   return (
     <div className="">
-      {categories.map(category => <Category name={category}>  </Category>)}
+      <Category></Category>
+      {/* Mau's code {categories.map(category => <Category name={category}>  </Category>)} */}
     </div>
   );
 }

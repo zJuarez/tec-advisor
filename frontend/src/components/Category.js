@@ -1,21 +1,40 @@
 import '../App.css';
 import Place from './Place';
 import Divider from '@mui/material/Divider';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-function Category(props) {
+export default class Category extends Component {
 
-    const numberOfPlaces = props.numberOfPlaces ?? 2;
-    const name = props.name ?? "Category";
-    const places = Array.from({ length: numberOfPlaces }, (v, i) => <Place></Place>)
+    constructor(props) {
+        super(props);
+        this.state = { businesses: [] };
+    }
 
-    return (
-        <div className="feed">
-            <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}>
-                <Divider> {name.toUpperCase()}</Divider>
-                {places}
+    componentDidMount() {
+        axios.get('http://localhost:8000/business/')
+            .then(response => {
+                this.setState({ businesses: response.data })
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    businessList() {
+        return this.state.businesses.map(currentBusiness => {
+            return <Place business={currentBusiness}></Place>
+        })
+    }
+
+    render() {
+        return (
+            <div className="feed">
+                <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}>
+                    {/* Mau's code <Divider> {name.toUpperCase()}</Divider> */}
+                    { this.businessList() }
+                </div>
             </div>
-        </div>
-    );
+        )
+    }
 }
-
-export default Category;
