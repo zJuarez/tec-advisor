@@ -11,6 +11,7 @@ const path = require('path')
 
 //IMPORT ROUTES
 const userRoutes = require('./routes/user')
+const businessRouter = require('./routes/business')
 
 //CONNECT DATABASE
 mongoose.connect(process.env.DATABASE, {
@@ -18,8 +19,8 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useCreateIndex: true
 })
-    .then(() => console.log('DB connected'))
-    .catch((err) => console.log(err));
+.then(() => console.log('DB connected'))
+.catch((err) => console.log(err));
 
 //MIDDLEWARE
 app.use(morgan('dev'));
@@ -32,6 +33,7 @@ app.use(express.static(path.resolve(__dirname, '../frontend/build')));
 
 //ROUTES MIDDLEWARE
 app.use("/api", userRoutes)
+app.use('/business', businessRouter)
 
 //ERROR MIDDLEWARE
 app.use(errorHandler);
