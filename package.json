@@ -2,6 +2,7 @@
   "name": "tec-advisor",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://tec-advisor.herokuapp.com/",
   "main": "index.js",
   "scripts": {
     "start": "node backend/index.js",
