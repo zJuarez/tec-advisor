@@ -2,9 +2,16 @@ const router = require('express').Router();
 let Business = require('../models/business.model');
 
 router.route('/').get((req, res) => {
-   Business.find()
-    .then(businesses => res.json(businesses)) 
-    .catch(err => res.status(400).json('Error: ' + err));
+    Business.find()
+        .then(businesses => res.json(businesses))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/category/:category').get((req, res) => {
+    console.log("Print3", req.params)
+    Business.find({ category: req.params.category })
+        .then(businesses => res.json(businesses))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // Add a business
@@ -44,38 +51,39 @@ router.route('/add/:id').post((req, res) => {
     const text = req.body.text;
     const stars = Number(req.body.stars);
 
-    var update = {"$push":
-                    {
-                        'reviews':
-                        {
-                            'text': text,
-                            'stars': stars
-                        }
-                    },
-                    "$inc" :
-                    {
-                        reviewCount: 1
-                    }
+    var update = {
+        "$push":
+        {
+            'reviews':
+            {
+                'text': text,
+                'stars': stars
+            }
+        },
+        "$inc":
+        {
+            reviewCount: 1
+        }
     };
 
     // Insert review into business model and update reviewCount += 1
     var newStars;
-    Business.updateOne({_id:id},update,{upsert: true}, function(err,data) {
-        if(err) res.json(err);
+    Business.updateOne({ _id: id }, update, { upsert: true }, function (err, data) {
+        if (err) res.json(err);
         else {
             // Recalculate business' rating
-            Business.findById(id, function(err, data) {
-                if(err) res.json(err);
+            Business.findById(id, function (err, data) {
+                if (err) res.json(err);
                 else {
                     newStars = (data.stars + stars) / data.reviewCount;
-        
-                    Business.findByIdAndUpdate(id, { 
+
+                    Business.findByIdAndUpdate(id, {
                         stars: newStars
-                    }, function(err, data) {
-                        if(err) res.json(err);
+                    }, function (err, data) {
+                        if (err) res.json(err);
                         else res.json(data);
                     });
-        
+
                 }
             });
         }
@@ -91,10 +99,11 @@ router.route('/add/:id').post((req, res) => {
 
 // Find business by id
 router.route('/:id').get((req, res) => {
+    console.log("Print", req.params)
     Business.findById(req.params.id)
-      .then(business => res.json(business))
-      .catch(err => res.status(400).json('Error: ' + err));
-  });
+        .then(business => res.json(business))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 // Delete business by id
 router.route('/:id').delete((req, res) => {

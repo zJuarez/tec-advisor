@@ -1,40 +1,44 @@
 import '../App.css';
 import Place from './Place';
-import Divider from '@mui/material/Divider';
-import React, { Component } from 'react';
+import LoadingPlace from './LoadingPlace';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
-export default class Category extends Component {
+export default function Category(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = { businesses: [] };
-    }
+    const category = props.name;
+    const [business, setBusiness] = useState([])
+    const [loading, setLoading] = useState(false);
 
-    componentDidMount() {
-        axios.get('http://localhost:8000/business/')
+    const fetchCategory = useCallback(() => {
+        setLoading(true)
+        axios.get('http://localhost:8000/business/category/' + category)
             .then(response => {
-                this.setState({ businesses: response.data })
+                setBusiness(response.data)
+                setLoading(false)
             })
             .catch((error) => {
                 console.log(error);
             })
+    })
+
+    useEffect(() => {
+        fetchCategory()
+    }, [category])
+
+
+    if (loading) {
+        return <div className="feed"><LoadingPlace /><LoadingPlace /></div>
+    } else if (business == null || business.length === 0) {
+        return <div className="feed"><h1> Sorry! Looks like there are no results. </h1></div>
     }
 
-    businessList() {
-        return this.state.businesses.map(currentBusiness => {
-            return <Place business={currentBusiness}></Place>
-        })
-    }
-
-    render() {
-        return (
-            <div className="feed">
-                <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}>
-                    {/* Mau's code <Divider> {name.toUpperCase()}</Divider> */}
-                    { this.businessList() }
-                </div>
+    return (
+        <div className="feed">
+            <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}>
+                {business.map(business => <Place business={business} />)}
             </div>
-        )
-    }
+        </div>
+    )
+
 }

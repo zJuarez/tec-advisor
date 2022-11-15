@@ -1,14 +1,46 @@
 import '../App.css';
-import categories from '../data/categories';
-import Category from './Category';
 
-function Home() {
+import '../App.css';
+import Place from './Place';
+import LoadingPlace from './LoadingPlace';
+import React, { useEffect, useState, useCallback } from 'react';
+import axios from 'axios';
+
+export default function Home() {
+
+  const [business, setBusiness] = useState([])
+  const [loading, setLoading] = useState(false);
+
+  const fetchHome = useCallback(() => {
+    setLoading(true)
+    axios.get('http://localhost:8000/business/')
+      .then(response => {
+        setBusiness(response.data)
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  })
+
+
+  useEffect(() => {
+    fetchHome()
+  }, [])
+
+
+  if (loading) {
+    return <div className="feed"><LoadingPlace /><LoadingPlace /></div>
+  } else if (business == null || business.length === 0) {
+    return <div className="feed"><h1> Sorry! Looks like there are no results. </h1></div>
+  }
+
   return (
-    <div className="">
-      <Category></Category>
-      {/* Mau's code {categories.map(category => <Category name={category}>  </Category>)} */}
+    <div className="feed">
+      <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}>
+        {business.map(business => <Place business={business} />)}
+      </div>
     </div>
-  );
-}
+  )
 
-export default Home;
+}

@@ -6,57 +6,61 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import NorthIcon from '@mui/icons-material/North';
-import titos from './titos.jpg'
-import SouthIcon from '@mui/icons-material/South';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import CommentIcon from '@mui/icons-material/Comment';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Rating from '@mui/material/Rating';
+import BusinessReviewModal from './BusinessReviewsModal';
+import Button from '@mui/material/Button';
+import { useState } from 'react';
 
 export default function Place(props) {
 
+    const navigate = useNavigate()
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const id = props.business._id;
     const name = props.business.name;
     const category = props.business.category;
-    const address = props.business.address;
     const city = props.business.city;
     const state = props.business.state;
     const img = props.business.imageUrl;
+    const stars = props.business.stars;
+
+    const handleLocationClick = () => {
+        navigate('/location/' + id)
+    }
 
     return (<Card sx={{ width: "100%", marginTop: 2, boxShadow: 'none', margin: "1px solid gray" }}>
-        <CardMedia
-            component="img"
-            maxHeight="240px"
-            image={img}
-            alt={name}
-        />
+        <Link to={'/' + category + '/' + id}>
+            <CardMedia
+                component="img"
+                maxHeight="240px"
+                image={img}
+                alt={name}
+            />
+        </Link>
         <CardContent>
             <CardHeader
                 title={name}
                 subheader={category + ". " + city + ", " + state}
             />
-
-            <Typography variant="body2" color="text.secondary">
-                {/* {desc} */}
-            </Typography>
         </CardContent>
         <CardActions>
-            <IconButton aria-label="up vote">
-                <NorthIcon />
+            <Button variant="rating" onClick={handleOpen}>
+                <Rating name="half-rating" defaultValue={stars} readOnly precision={0.5} />
+            </Button>
+            <IconButton onClick={handleLocationClick} style={{ marginLeft: 'auto' }} aria-label="location">
+                <PinDropIcon />
             </IconButton>
-            <IconButton aria-label="down vote">
-                <SouthIcon />
-            </IconButton>
-            <IconButton style={{ marginLeft: 'auto' }} aria-label="location">
-                <Link to={"/location/"+props.business._id}>
-                    <PinDropIcon />
-                </Link>
-            </IconButton>
-            <IconButton>
-                <Link to={"/reviews/"+props.business._id}>
-                    <CommentIcon/>
-                </Link>
+            <IconButton onClick={handleOpen}>
+                <CommentIcon />
             </IconButton>
         </CardActions>
+        <BusinessReviewModal id={id} open={open} handleClose={handleClose} business={name} />
     </Card>);
 
 }

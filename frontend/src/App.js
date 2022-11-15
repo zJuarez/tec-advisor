@@ -13,6 +13,7 @@ import AddBusiness from './components/AddBusiness';
 import BusinessReviews from './components/BusinessReviews';
 import Map from './components/BusinessLocation';
 import { useLoadScript } from '@react-google-maps/api';
+import DetailedPlace from './components/DetailedPlace';
 
 // Or Create your Own theme:
 const theme = createTheme({
@@ -32,7 +33,7 @@ function App() {
   });
 
   // For google maps
-  if(!isLoaded) {
+  if (!isLoaded) {
     <div>Loading...</div>
   }
 
@@ -58,9 +59,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/addBus" element={<AddBusiness />} />
-            <Route path="/reviews/:id" element={<BusinessReviews/>} />
-            <Route path="/location/:id" element={<Map/>} />
+            {/*<Route path="/reviews/:id" element={<BusinessReviews />} />*/}
+            <Route path="/location/:id" element={<Map />} />
             {categories.map(category => <Route path={"/" + category} element={<Category name={category} ></Category>} ></Route>)}
+            {categories.map(category => <Route path={"/" + category + '/:id'} element={<DetailedPlace></DetailedPlace>} ></Route>)}
           </Routes>
         </div>
       </ThemeProvider>

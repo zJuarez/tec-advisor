@@ -37,10 +37,10 @@
 }
 
 .map-container {
-  width: 30vw;
-  height: 50%;
-  position: fixed !important;
+  width: 100vw;
+  height: 70vh;
 }
+
 
 @media screen and (max-width: 600px) {
   .feed {

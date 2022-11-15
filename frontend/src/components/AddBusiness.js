@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import categories from '../data/categories';
 export default class AddBusiness extends Component {
     constructor(props) {
         super(props);
-        
+
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeAddress = this.onChangeAddress.bind(this);
@@ -94,29 +94,27 @@ export default class AddBusiness extends Component {
 
         axios.post('http://localhost:8000/business/add', business)
             .then(res => console.log(res.data));
-        
+
         window.location = ('/')
     }
 
     render() {
         return (
             <div>
-                <h3>Add Restaurant</h3>
+                <h3>Add Business</h3>
                 <form onSubmit={this.onSubmit}>
                     <label>Name: </label>
-                    <input type="text" required onChange={this.onChangeName}/>
+                    <input type="text" required onChange={this.onChangeName} />
 
                     <label for="category">Category: </label>
                     <select name="category" id="category" onChange={this.onChangeCategory}>
                         <option>Select one</option>
-                        <option value="Restaurant">Restaurant</option>
-                        <option value="Laundry">Laundry</option>
-                        <option value="Coffee Shop">Coffee Shop</option>
+                        {categories.map(categoryName => <option value={categoryName}>{categoryName}</option>)}
                     </select>
 
                     <label>Address: </label>
                     <input type="text" required onChange={this.onChangeAddress}></input>
-                    <br/>
+                    <br />
                     <label>City: </label>
                     <input type="text" required onChange={this.onChangeCity}></input>
 
@@ -125,7 +123,7 @@ export default class AddBusiness extends Component {
 
                     <label>Latitude: </label>
                     <input type="text" required onChange={this.onChangeLatitude}></input>
-                    <br/>
+                    <br />
                     <label>Longitude: </label>
                     <input type="text" required onChange={this.onChangeLongitude}></input>
 
