@@ -12,7 +12,7 @@ export default function Category(props) {
 
     const fetchCategory = useCallback(() => {
         setLoading(true)
-        axios.get('http://localhost:8000/business/category/' + category)
+        axios.get('/business/category/' + category)
             .then(response => {
                 setBusiness(response.data)
                 setLoading(false)

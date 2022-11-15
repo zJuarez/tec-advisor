@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -28,11 +29,18 @@ export default function BusinessReviewModal(props) {
     const [review, setReview] = useState("")
     const [stars, setStars] = useState(0)
     const [error, setError] = useState(false)
+    const navigate = useNavigate()
+
+    const logIn = document.cookie.search('userName=') !== -1
+    const userName = logIn ? document.cookie.substr(
+        document.cookie.search('userName=') + 9
+    ) : null
 
     const post = () => {
         const reviewObject = {
             text: review,
-            stars: stars
+            stars: stars,
+            name: userName,
         }
 
         console.log(reviewObject)
@@ -42,10 +50,34 @@ export default function BusinessReviewModal(props) {
             return
         }
 
-        axios.post('http://localhost:8000/business/add/' + id, reviewObject)
+        axios.post('/business/add/' + id, reviewObject)
             .then(res => console.log(res.data));
         toast.success("Review added!");
         handleClose()
+    }
+
+    if (userName == null) {
+        return <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                    {'Looks like you are not logged in'}
+                </Typography>
+                <Typography id="modal-modal-title" variant="h8" component="h4">
+                    {'You want to write a review?'}
+                </Typography>
+                <Box sx={{ mt: 5, textAlign: 'center' }}>
+                    <Button sx={{ width: 150, justifySelf: 'center' }} variant="contained" onClick={() => navigate("/login")} component="label">
+                        Login
+                    </Button>
+                </Box>
+            </Box>
+        </Modal >
+
     }
 
     return (

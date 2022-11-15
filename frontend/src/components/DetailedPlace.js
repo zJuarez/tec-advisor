@@ -29,7 +29,7 @@ export default function DetailedPlace() {
     const fetchBusiness = useCallback(() => {
         setLoading(true);
         // TODO CHANGE HARDOCDED URI
-        axios.get('http://localhost:8000/business/' + id)
+        axios.get('/business/' + id)
             .then(response => {
                 console.log(id)
                 setPlace(response.data)

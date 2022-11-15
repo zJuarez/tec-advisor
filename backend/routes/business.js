@@ -50,6 +50,7 @@ router.route('/add/:id').post((req, res) => {
     const id = req.params.id;
     const text = req.body.text;
     const stars = Number(req.body.stars);
+    const name = req.body.name
 
     var update = {
         "$push":
@@ -57,7 +58,8 @@ router.route('/add/:id').post((req, res) => {
             'reviews':
             {
                 'text': text,
-                'stars': stars
+                'stars': stars,
+                'name': name,
             }
         },
         "$inc":
@@ -75,7 +77,7 @@ router.route('/add/:id').post((req, res) => {
             Business.findById(id, function (err, data) {
                 if (err) res.json(err);
                 else {
-                    newStars = (data.stars + stars) / data.reviewCount;
+                    newStars = (data.stars * data.reviewCount + stars) / (data.reviewCount + 1);
 
                     Business.findByIdAndUpdate(id, {
                         stars: newStars

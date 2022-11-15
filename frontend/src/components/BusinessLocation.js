@@ -21,7 +21,7 @@ class Map extends Component {
 
     componentDidMount() {
         let { id } = this.props.params;
-        axios.get('http://localhost:8000/business/' + id)
+        axios.get('/business/' + id)
             .then(response => {
                 this.setState({
                     latitude: response.data.latitude,

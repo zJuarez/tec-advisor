@@ -92,7 +92,7 @@ export default class AddBusiness extends Component {
 
         console.log(business);
 
-        axios.post('http://localhost:8000/business/add', business)
+        axios.post('/business/add', business)
             .then(res => console.log(res.data));
 
         window.location = ('/')

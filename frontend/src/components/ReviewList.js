@@ -30,10 +30,10 @@ export default function AlignItemsList(props) {
         <List sx={{ width: '100%', bgcolor: 'white' }}>
             {reviews.map(review => <><ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt={review.name ?? 'Mauricio'} src="" />
+                    <Avatar alt={review.name ?? 'Anonymus'} > {review.name ? review.name[0] : '?'} </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={review.name ?? 'Mauricio'}
+                    primary={review.name ?? 'Anonymus'}
                     secondary={
                         <React.Fragment>
                             <div>

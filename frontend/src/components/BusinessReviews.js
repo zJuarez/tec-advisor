@@ -16,7 +16,7 @@ function withParams(Component) {
 class BusinessReviews extends Component {
     constructor(props) {
         super(props);
-        
+
         this.onChangeReview = this.onChangeReview.bind(this);
         this.onChangeStars = this.onChangeStars.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -47,7 +47,7 @@ class BusinessReviews extends Component {
 
     componentDidMount() {
         let { id } = this.props.params;
-        axios.get('http://localhost:8000/business/'+id)
+        axios.get('/business/' + id)
             .then(response => {
                 this.setState({
                     name: response.data.name,
@@ -58,7 +58,7 @@ class BusinessReviews extends Component {
                     reviews: response.data.reviews
                 })
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             })
     }
@@ -72,9 +72,9 @@ class BusinessReviews extends Component {
         }
 
         let { id } = this.props.params;
-        axios.post('http://localhost:8000/business/add/'+id, review)
+        axios.post('/business/add/' + id, review)
             .then(res => console.log(res.data));
-        
+
         window.location = (id)
     }
 
@@ -102,7 +102,7 @@ class BusinessReviews extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { this.reviewsList() }
+                        {this.reviewsList()}
                     </tbody>
                 </table>
 

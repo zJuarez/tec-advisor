@@ -13,7 +13,7 @@ export default function Home() {
 
   const fetchHome = useCallback(() => {
     setLoading(true)
-    axios.get('http://localhost:8000/business/')
+    axios.get('/business/')
       .then(response => {
         setBusiness(response.data)
         setLoading(false)

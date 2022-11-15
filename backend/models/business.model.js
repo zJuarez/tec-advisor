@@ -1,3 +1,4 @@
+const { Double } = require('bson');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -22,13 +23,14 @@ const BusinessSchema = new Schema({
   state: { type: String },
   latitude: { type: Number },
   longitude: { type: Number },
-  stars: { type: Number },
+  stars: { type: Double },
   reviewCount: { type: Number },
   imageUrl: { type: String },
   reviews: [
-    { 
+    {
       text: String,
-      stars: Number
+      stars: Double,
+      name: String,
     }
   ]
 }, {
