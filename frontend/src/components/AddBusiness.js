@@ -90,8 +90,6 @@ export default class AddBusiness extends Component {
             reviewCount: 0
         }
 
-        console.log(business);
-
         axios.post('/business/add', business)
             .then(res => console.log(res.data));
 

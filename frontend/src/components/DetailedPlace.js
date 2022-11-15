@@ -31,14 +31,11 @@ export default function DetailedPlace() {
         // TODO CHANGE HARDOCDED URI
         axios.get('/business/' + id)
             .then(response => {
-                console.log(id)
                 setPlace(response.data)
-                console.log(response.data)
                 setLoading(false)
             })
             .catch((error) => {
                 setPlace({ error: error })
-                console.log(error);
             })
     })
     useEffect(() => {
@@ -51,7 +48,7 @@ export default function DetailedPlace() {
     const city = place.city;
     const state = place.state;
     const img = place.imageUrl;
-    const stars = place.stars
+    const stars = place.stars ? ('$numberDecimal' in place.stars ? place.stars['$numberDecimal'] : 0) : 0
     const latitude = place.latitude
     const longitude = place.longitude
 

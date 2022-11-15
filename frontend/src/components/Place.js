@@ -28,7 +28,7 @@ export default function Place(props) {
     const city = props.business.city;
     const state = props.business.state;
     const img = props.business.imageUrl;
-    const stars = props.business.stars;
+    const stars = props.business.stars['$numberDecimal']
 
     const handleLocationClick = () => {
         navigate('/location/' + id)

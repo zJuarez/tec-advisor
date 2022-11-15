@@ -1,4 +1,4 @@
-const { Double } = require('bson');
+const { Decimal128 } = require('bson');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -23,13 +23,13 @@ const BusinessSchema = new Schema({
   state: { type: String },
   latitude: { type: Number },
   longitude: { type: Number },
-  stars: { type: Double },
+  stars: { type: Decimal128 },
   reviewCount: { type: Number },
   imageUrl: { type: String },
   reviews: [
     {
       text: String,
-      stars: Double,
+      stars: Decimal128,
       name: String,
     }
   ]

@@ -37,7 +37,7 @@ export default function AlignItemsList(props) {
                     secondary={
                         <React.Fragment>
                             <div>
-                                <Rating size="small" name="half-rating" defaultValue={review.stars} readOnly precision={0.5} />
+                                <Rating size="small" name="half-rating" defaultValue={'$numberDecimal' in review.stars ? review.stars['$numberDecimal'] : 0} readOnly precision={0.5} />
                             </div>
                             {review.text}
                         </React.Fragment>
