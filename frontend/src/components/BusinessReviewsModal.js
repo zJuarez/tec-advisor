@@ -25,7 +25,7 @@ const style = {
 };
 
 export default function BusinessReviewModal(props) {
-    const { open, handleClose, business, id } = props;
+    const { open, handleClose, business, id, refresh } = props;
     const [review, setReview] = useState("")
     const [stars, setStars] = useState(0)
     const [error, setError] = useState(false)
@@ -53,6 +53,9 @@ export default function BusinessReviewModal(props) {
         axios.post('/business/add/' + id, reviewObject)
             .then(res => console.log(res.data));
         toast.success("Review added!");
+        if (refresh) {
+            refresh()
+        }
         handleClose()
     }
 

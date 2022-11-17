@@ -8,11 +8,10 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 
-export default function AlignItemsList(props) {
+export default function ReviewList(props) {
     const { reviews, onClick } = props
 
     const logIn = document.cookie.search('userName=') !== -1
@@ -41,23 +40,25 @@ export default function AlignItemsList(props) {
                     <Avatar alt={review.name ?? 'Anonymus'} > {review.name ? review.name[0] : '?'} </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={review.name ?? 'Anonymus'}
+                    primary={(review.name ?? 'Anonymus') + (review.edited === 1 ? ' [Edit]' : '')}
                     secondary={
                         <React.Fragment>
                             <div>
                                 <Rating size="small" name="half-rating" defaultValue={'$numberDecimal' in review.stars ? review.stars['$numberDecimal'] : 0} readOnly precision={0.5} />
                             </div>
-                            {review.text}
+                            <div>
+                                {review.text}
+                            </div>
+                            {review.creationDate ? review.creationDate.substr(0, 10) : ''}
                         </React.Fragment>
                     }
                 />
-                { review.name === userName ?
-                    <Fab size="small" color="primary" aria-label="edit">
-                        <Link to={"/editReview/"+ review._id }>
-                            <EditIcon />
-                        </Link>
-                    </Fab>
-                : null }
+                {review.name === userName ?
+                    <Link style={{ decoration: 'none', marginTop: 4 }} to={"/editReview/" + review._id}>
+                        <EditIcon fontSize='small' color='action' />
+                    </Link>
+                    : null}
+
             </ListItem> <Divider light /> </>)
             }
             {button}

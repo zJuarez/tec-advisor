@@ -20,7 +20,7 @@ class EditReview extends Component {
             stars: 0,
             reviews: []
         };
-        
+
     }
 
     onChangeReview(e) {
@@ -67,7 +67,7 @@ class EditReview extends Component {
         axios.post('/business/update/' + id, review)
             .then(res => console.log(res.data));
 
-        window.location = (id)
+        window.history.back()
     }
 
     render() {
@@ -75,23 +75,24 @@ class EditReview extends Component {
             <div>
                 <h2>Edit!</h2>
 
-                { this.state.reviews?.map(review => { 
+                {this.state.reviews?.map(review => {
                     return (
-                         review._id === this.state.id ? 
+                        review._id === this.state.id ?
 
                             <form onSubmit={this.onSubmit}>
                                 <label>Edit your review:</label>
                                 <input type="text" id="text" required onChange={this.onChangeReview} defaultValue={review.text}></input>
                                 <input type="text" id="stars" required onChange={this.onChangeStars} defaultValue={review.stars.$numberDecimal}></input>
-                                
+
                                 <input type="hidden" id="old_stars" defaultValue={review.stars.$numberDecimal} ></input>
                                 <input type="submit" value="Save"></input>
                             </form>
-                            
-                        : null 
-                    )}
+
+                            : null
+                    )
+                }
                 )}
-                
+
             </div>
         )
     }

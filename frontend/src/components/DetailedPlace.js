@@ -91,7 +91,7 @@ export default function DetailedPlace() {
                         <Rating name="half-rating" defaultValue={stars} readOnly precision={0.5} />
                     </Button>
                 </CardActions>
-                <BusinessReviewModal id={id} open={open} handleClose={handleClose} business={name} />
+                <BusinessReviewModal id={id} open={open} handleClose={handleClose} business={name} refresh={() => setRefresh(true)} />
             </Card>
         </div >
         <Card sx={{ width: "100%", marginTop: 2, boxShadow: 'none', margin: "1px solid gray" }}>
