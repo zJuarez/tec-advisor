@@ -15,6 +15,8 @@ import BusinessReviewModal from './BusinessReviewsModal';
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import ReviewList from './ReviewList'
 import LoadingPlace from './LoadingPlace'
+import RefreshIcon from '@mui/icons-material/Refresh';
+import IconButton from '@mui/material/IconButton';
 
 export default function DetailedPlace() {
 
@@ -25,6 +27,7 @@ export default function DetailedPlace() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [loading, setLoading] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const fetchBusiness = useCallback(() => {
         setLoading(true);
@@ -42,6 +45,13 @@ export default function DetailedPlace() {
         fetchBusiness()
     }, [])
 
+    useEffect(() => {
+        if (refresh) {
+            fetchBusiness()
+            setRefresh(false);
+        }
+    }, [refresh])
+
     const name = place.name;
     const category = place.category;
     const address = place.address;
@@ -57,16 +67,19 @@ export default function DetailedPlace() {
     }
 
     return (<div className="feed">
+        <div style={{ position: 'absolute', background: 'rgba(0,0,0,0.50)' }}>
+            <IconButton onClick={() => setRefresh(true)} style={{ marginLeft: 'auto' }} aria-label="refresh">
+                <RefreshIcon color="primary" />
+            </IconButton>
+        </div>
         <div style={{ marginTop: 10, fontSize: 12, color: "gray" }}>
             <Card sx={{ width: "100%", marginTop: 2, bosxShadow: 'none', margin: "1px solid gray" }}>
-                <Link to={'/' + category + '/' + place._id}>
-                    <CardMedia
-                        component="img"
-                        maxHeight="240px"
-                        image={img}
-                        alt={name}
-                    />
-                </Link>
+                <CardMedia
+                    component="img"
+                    maxHeight="240px"
+                    image={img}
+                    alt={name}
+                />
                 <CardContent>
                     <CardHeader
                         title={name}

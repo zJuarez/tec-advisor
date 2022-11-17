@@ -158,6 +158,7 @@ export default function Signup({ classes }) {
 
             if (data.success === true) {
                 setValues({ name: '', email: '', password: '' });
+                document.cookie = `userName=${name}; path=/;`; // 'log in' user after register
                 toast.success("Sign up successfully, you are in!");
                 navigate('/');
             }

@@ -35,7 +35,7 @@ export default function Place(props) {
     }
 
     return (<Card sx={{ width: "100%", marginTop: 2, boxShadow: 'none', margin: "1px solid gray" }}>
-        <Link to={'/' + category + '/' + id}>
+        <Link to={'/place/' + id}>
             <CardMedia
                 component="img"
                 maxHeight="240px"

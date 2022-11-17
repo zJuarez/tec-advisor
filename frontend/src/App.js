@@ -38,7 +38,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router >
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -62,7 +62,8 @@ function App() {
             {/*<Route path="/reviews/:id" element={<BusinessReviews />} />*/}
             <Route path="/location/:id" element={<Map />} />
             {categories.map(category => <Route path={"/" + category} element={<Category name={category} ></Category>} ></Route>)}
-            {categories.map(category => <Route path={"/" + category + '/:id'} element={<DetailedPlace></DetailedPlace>} ></Route>)}
+            <Route path={"/place/:id"} element={<DetailedPlace></DetailedPlace>} ></Route>
+            <Route path="*" element={<h1>404</h1>} />
           </Routes>
         </div>
       </ThemeProvider>

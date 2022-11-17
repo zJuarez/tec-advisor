@@ -43,6 +43,13 @@ app.use(errorHandler);
 
 const port = process.env.PORT || 8000;
 
+app.get('*', (req, res) => {
+    console.log('redirecting');
+    res.sendFile(
+        path.resolve(__dirname, '../frontend/build', 'index.html')
+    );
+});
+
 app.listen(port, () => {
     console.log(`App is running on port ${port}`);
 })

@@ -155,11 +155,14 @@ const Navbar = (props) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleLogout}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key={'Logout'} onClick={handleLogout}>
+                <Typography textAlign="center">{'Logout'}</Typography>
+              </MenuItem>
+              <MenuItem key={'Add place'}>
+                <Link to='/addBus' style={{ textDecoration: 'none' }}>
+                  <Typography textAlign="center">{'Add place'}</Typography>
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>}
           {!logIn &&
