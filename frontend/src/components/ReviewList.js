@@ -8,9 +8,17 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Fab from '@mui/material/Fab';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 
 export default function AlignItemsList(props) {
     const { reviews, onClick } = props
+
+    const logIn = document.cookie.search('userName=') !== -1
+    const userName = logIn ? document.cookie.substr(
+        document.cookie.search('userName=') + 9
+    ) : null
 
     const emptyState = <h4 style={{ color: "gray" }}> No Reviews Yet. Write your own!</h4>
     const button = <Box sx={{ mb: 1, mt: 2, textAlign: 'center' }}>
@@ -43,6 +51,13 @@ export default function AlignItemsList(props) {
                         </React.Fragment>
                     }
                 />
+                { review.name === userName ?
+                    <Fab size="small" color="primary" aria-label="edit">
+                        <Link to={"/editReview/"+ review._id }>
+                            <EditIcon />
+                        </Link>
+                    </Fab>
+                : null }
             </ListItem> <Divider light /> </>)
             }
             {button}

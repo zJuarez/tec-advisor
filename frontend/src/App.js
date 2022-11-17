@@ -11,6 +11,7 @@ import Category from './components/Category';
 import Navbar from './components/Navbar';
 import AddBusiness from './components/AddBusiness';
 import BusinessReviews from './components/BusinessReviews';
+import EditReview from './components/EditReview';
 import Map from './components/BusinessLocation';
 import { useLoadScript } from '@react-google-maps/api';
 import DetailedPlace from './components/DetailedPlace';
@@ -61,6 +62,7 @@ function App() {
             <Route path="/addBus" element={<AddBusiness />} />
             {/*<Route path="/reviews/:id" element={<BusinessReviews />} />*/}
             <Route path="/location/:id" element={<Map />} />
+            <Route path="/editReview/:id" element={<EditReview />} />
             {categories.map(category => <Route path={"/" + category} element={<Category name={category} ></Category>} ></Route>)}
             <Route path={"/place/:id"} element={<DetailedPlace></DetailedPlace>} ></Route>
             <Route path="*" element={<h1>404</h1>} />

@@ -77,7 +77,7 @@ router.route('/add/:id').post((req, res) => {
             Business.findById(id, function (err, data) {
                 if (err) res.json(err);
                 else {
-                    newStars = (data.stars * data.reviewCount + stars) / (data.reviewCount + 1);
+                    newStars = (data.stars * (data.reviewCount-1) + stars) / (data.reviewCount);
 
                     Business.findByIdAndUpdate(id, {
                         stars: newStars
@@ -90,13 +90,6 @@ router.route('/add/:id').post((req, res) => {
             });
         }
     });
-
-    // Business.findByIdAndUpdate(id, {
-    //     $inc: { reviewCount: 1 }
-    // }, function(err, data) {
-    //     if(err) res.json(err);
-    //     else res.json(data);
-    // });
 });
 
 // Find business by id
@@ -112,6 +105,43 @@ router.route('/:id').delete((req, res) => {
     Business.findByIdAndDelete(req.params.id)
         .then(() => res.json('Business deleted!'))
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Find business by review's id
+router.route('/review/:id').get((req, res) => {
+    console.log("Print", req.params);
+
+    Business.findOne({'reviews._id': req.params.id}, function(err, business) {
+        res.json(business);
+        if(err) res.json(err)
+    });
+});
+
+// Update review and business' rating
+router.route('/update/:id').post((req, res) => {
+
+    // Returns the business that belongs to that review
+    Business.findOne({'reviews._id': req.params.id}, function(err, data) {
+        if(err) res.json(err);
+        else {
+            // Recalculating rating
+            var newStars = (data.stars * data.reviewCount + ( Number(req.body.stars) - Number(req.body.old_stars) )) / (data.reviewCount);
+
+            Business.findOneAndUpdate({'_id': data._id, 'reviews._id': req.params.id },
+            {
+                "$set": {
+                    "reviews.$.text": req.body.text,
+                    "reviews.$.stars": req.body.stars,
+                    "reviews.$.edited": 1,
+                    "reviews.$.creationDate": new Date(),
+                    "stars": newStars
+                }
+            }, function(err, data){
+                if(err) res.json(err);
+                else res.json(data);
+            });
+        }
+    });
 });
 
 module.exports = router;
