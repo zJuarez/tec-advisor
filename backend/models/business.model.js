@@ -31,6 +31,8 @@ const BusinessSchema = new Schema({
       text: String,
       stars: Decimal128,
       name: String,
+      edited: { type: Number, default: 0 },
+      creationDate: { type: Date, default: Date.now }
     }
   ]
 }, {

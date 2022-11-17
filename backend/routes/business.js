@@ -132,6 +132,8 @@ router.route('/update/:id').post((req, res) => {
                 "$set": {
                     "reviews.$.text": req.body.text,
                     "reviews.$.stars": req.body.stars,
+                    "reviews.$.edited": 1,
+                    "reviews.$.creationDate": new Date(),
                     "stars": newStars
                 }
             }, function(err, data){
